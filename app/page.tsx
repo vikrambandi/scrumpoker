@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+import { Dialog } from "./ui";
 
 const serverURL = "http://localhost:3001";
 
@@ -13,6 +14,7 @@ const IndexPage = () => {
   const [roomId, setRoomId] = useState("");
   const [joinedRoomId, setJoinedRoomId] = useState("");
   const [userIds, setUserIds] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
   const socket = useMemo(
     () =>
       io(serverURL, {
@@ -31,7 +33,7 @@ const IndexPage = () => {
   };
 
   const socketInitializer = useCallback(async () => {
-    socket.connect()
+    socket.connect();
 
     socket.on("userConnected", (id) => {
       console.log("connected");
@@ -66,7 +68,7 @@ const IndexPage = () => {
       socket.off("usersList");
       socket.off("destroy");
       socket.off("connect_error");
-      socket.disconnect()
+      socket.disconnect();
     };
   }, [socket, socketInitializer]);
 
@@ -88,7 +90,6 @@ const IndexPage = () => {
             <button
               className="btn btn-primary"
               onClick={() => socket.emit("joinRoom", roomId)}
-              // onClick={() => toast('This is a success toasts!')}
             >
               Join Room
             </button>
@@ -96,7 +97,9 @@ const IndexPage = () => {
           <div className="divider">OR</div>
           <button
             className="btn btn-success"
-            onClick={() => socket.emit("userConnected")}
+            // onClick={() => socket.emit("userConnected")}
+            onClick={() => setIsOpen(true)}
+
           >
             Create Room
           </button>
@@ -109,6 +112,7 @@ const IndexPage = () => {
           ))}
         </ul>
       </div>
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 };
