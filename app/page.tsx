@@ -4,13 +4,16 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
-import { Dialog } from "./ui";
+
+import { Dialog } from "@/_components";
+import Link from "next/link";
 
 const serverURL = "http://localhost:3001";
 
 // const socket = io(serverURL, { autoConnect: false });
 const IndexPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const [roomId, setRoomId] = useState("");
   const [joinedRoomId, setJoinedRoomId] = useState("");
   const [userIds, setUserIds] = useState<string[]>([]);
@@ -89,17 +92,17 @@ const IndexPage = () => {
             />
             <button
               className="btn btn-primary"
-              onClick={() => socket.emit("joinRoom", roomId)}
+              // onClick={() => socket.emit("joinRoom", roomId)}
+              onClick={() => router.push("joinRoom")}
             >
               Join Room
             </button>
           </div>
           <div className="divider">OR</div>
           <button
-            className="btn btn-success"
+            className="btn btn-secondary"
             // onClick={() => socket.emit("userConnected")}
-            onClick={() => setIsOpen(true)}
-
+            onClick={() => router.push("createRoom")}
           >
             Create Room
           </button>

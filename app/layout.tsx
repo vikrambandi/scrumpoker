@@ -1,4 +1,4 @@
-import { Header } from "@/src/Components";
+import { Header } from "@/_components";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <StoreProvider>
-      <html lang="en" data-theme="cupcake">
+      <html lang="en" data-theme="emerald">
         <body
           className={`${inter.className} flex min-h-full flex-col items-center`}
         >
