@@ -1,5 +1,6 @@
 "use client";
 
+import { Button, Input, Typography } from "@material-tailwind/react";
 import { useState } from "react";
 
 const JoinRoom = () => {
@@ -12,34 +13,44 @@ const JoinRoom = () => {
     console.log("Name:", name);
     console.log("roomNo:", roomNo);
   };
+
   return (
-    <div className="m-2 flex flex-col gap-2">
-      <form onSubmit={handleSubmit} className="min-w-[24rem]">
-        <div className="mb-2">
-          <label className="label font-semibold">Username</label>
-          <input
-            type="text"
-            className="input input-bordered w-full"
-            placeholder="Name"
+    <div className="flex flex-col">
+      <form
+        onSubmit={handleSubmit}
+        className="flex min-w-[24rem] flex-col gap-6"
+      >
+        <div className="mb-1 flex flex-col gap-2">
+          <Typography variant="h6" color="blue-gray">
+            Username
+          </Typography>
+          <Input
+            size="lg"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required
+            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
           />
         </div>
-        <div className="mb-4">
-          <label className="label font-semibold">Room No</label>
-          <input
-            type="text"
-            className="input input-bordered w-full"
+        <div className="flex flex-col gap-2">
+          <Typography variant="h6" color="blue-gray">
+            Room No
+          </Typography>
+          <Input
+            size="lg"
             placeholder="123-456-789"
             value={roomNo}
             onChange={(e) => setRoomNo(e.target.value)}
-            required
+            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
           />
         </div>
-        <button className="btn btn-primary w-full">Join Room</button>
+        <Button size="lg">Join Room</Button>
       </form>
-
     </div>
   );
 };
